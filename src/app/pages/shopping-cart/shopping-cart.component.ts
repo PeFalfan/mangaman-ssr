@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
-import { Router } from 'express';
 import { ProductModel } from '../../models/productModel';
 import { NgFor } from '@angular/common';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-shopping-cart',
