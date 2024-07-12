@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { MangaComponent } from './manga.component';
+import { provideHttpClient } from '@angular/common/http';
 
 describe('MangaComponent', () => {
   let component: MangaComponent;
@@ -8,9 +8,12 @@ describe('MangaComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [MangaComponent]
+      imports: [MangaComponent],
+      providers: [
+        provideHttpClient(),
+      ]
     })
-    .compileComponents();
+      .compileComponents();
 
     fixture = TestBed.createComponent(MangaComponent);
     component = fixture.componentInstance;
