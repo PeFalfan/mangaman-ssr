@@ -1,25 +1,32 @@
-#Compilación
-FROM node:20.14.0 AS dev-deps
-
+# Etapa de construcción
+FROM node:20-alpine AS buildstage
 WORKDIR /app
 
-COPY package.json package.json
+# Copiar los archivos necesarios
+COPY package*.json ./
 
+# Instalar dependencias
 RUN npm install
 
-#etapa 2
-FROM node:20.14.0 AS builder
-
-WORKDIR /app
-COPY --from=dev-deps /app/node_modules ./node_modules
+# Copiar el resto del código
 COPY . .
 
-RUN npm run build 
+# Compilar la aplicación
+RUN npm run build -- --configuration production
 
-#etapa de produccion
-FROM nginx:1.23.3 AS prod
+# Etapa de producción
+FROM nginx:alpine
+# Copiar archivos compilados al directorio de Nginx
+COPY --from=buildstage /app/dist/mangaman-ssr/browser /usr/share/nginx/html
+# Copiar configuración personalizada
+COPY nginx.conf /etc/nginx/conf.d/default.conf
+# Exponer el puerto
 EXPOSE 80
 
-COPY --from=builder /app/dist/mangaman-ssr/browser/  /usr/share/nginx/html
-
+# Comando para iniciar Nginx
 CMD ["nginx", "-g", "daemon off;"]
+
+#Contruir imagen:
+    #docker build --no-cache -t front .
+#Levantar contenedor:
+    #docker run -d -p 80:80 --name front front

@@ -6,9 +6,11 @@ import { RegisterComponent } from './pages/register/register.component';
 import { ShoppingCartComponent } from './pages/shopping-cart/shopping-cart.component';
 
 export const routes: Routes = [
-    { path: '', component: HomeComponent, },
+    { path: 'home', component: HomeComponent, },
     { path: 'mangas', component: MangaComponent, },
     { path: 'carro-de-compras', component: ShoppingCartComponent, },
+    { path: '', redirectTo: '/login', pathMatch: 'full' },
     { path: 'login', component: LogInComponent, },
     { path: 'registro', component: RegisterComponent, },
 ];
+

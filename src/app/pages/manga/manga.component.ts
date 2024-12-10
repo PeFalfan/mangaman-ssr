@@ -23,6 +23,7 @@ export class MangaComponent {
   ngOnInit(): void {
     this.mangaService.getProducts().subscribe(data => {
       this.productos = data;
+      console.log(data);
     });
   }
 
